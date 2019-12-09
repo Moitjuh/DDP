@@ -1,0 +1,62 @@
+Developing Data Products - Forest Fire Shiny App
+========================================================
+author: Annette Spithoven
+date: Dec 7, 2019
+autosize: true
+
+Assignment Objective
+========================================================
+This presentation is part of the Course Project for the Coursera Developing Data Products class. The peer assessed assignment has two parts. First, a Shiny application should be created and deployed on Rstudio's servers. Second, Slidify or Rstudio Presenter should be used to prepare a reproducible pitch presentation about the application. 
+This presentation adresses the second part of the course project.
+
+The app developed for the first part of the assignment is avalilable at:
+https://annettes.shinyapps.io/DevelopingDataProductsWk4/
+
+Source code for ui.R and server.R files are available on the GitHub:
+https://github.com/Moitjuh/DDP
+
+The Shiny Application 
+========================================================
+The app helps the user to explore the data on the [Forest Fires Data set from the UCI machine learning repository](
+https://archive.ics.uci.edu/ml/datasets/forest+fires) (more detailed description is on the next slide).
+
+First, the user can select a variable of interst (and a month) to examine the distribution of values for the variable.
+
+Second, the relation of that variable with the area burned during the forest fire can be examined. 
+
+Lastly, the user can explore the raw data. 
+
+Data
+========================================================
+Current project uses the [Forest Fires Data set from the UCI machine learning repository](
+https://archive.ics.uci.edu/ml/datasets/forest+fires). 
+The dataset contains information about forest fires in the northeast region of Portugal. Variables are the burned area, various meteorological data and various Fire Weather Indeces. 
+
+```{r, echo = FALSE}
+library(dplyr)
+mainDir <- paste("D:/Annette/Documents", "DDP", sep = "/")
+destfile <- paste(mainDir,"forestfires.csv", sep="/")
+forestdata <- read.csv(destfile, header = TRUE, sep = ",",stringsAsFactors=FALSE) %>% 
+    mutate(full.month = month.name[match(month, tolower(month.abb))],
+           area = as.numeric(area),
+           temp=as.numeric(temp))
+```
+
+```{r}
+summary(forestdata[5:13])
+```
+
+The Shiny Application Usage
+========================================================
+
+The application consist of two panels: Left panel and Main panel. 
+The details are as follows:
+
+1) Left panel: The panel displays two dropdown menu's. Here the user can select a month and variable of interest of interest. The variables that can be selected are only the explanatory varaibles (so excluding burned area). 
+
+2) Main panel: There are three tabs.
+  * The first tab gives an description of the variable of interest in the selected month.
+  * The Second tab shows the relation between the choosen variable (in the selected month) and the area that is burned.
+  * The third tab provides a data table with the raw data. 
+
+
