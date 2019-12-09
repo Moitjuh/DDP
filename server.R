@@ -11,21 +11,15 @@ library(shiny)
 library(ggplot2)
 library(dplyr)
 
-# ## Create directory to where I saved the code
-# mainDir <- paste("D:/Annette/Documents", "DDP", sep = "/")
-# 
 # ## Check if the data exists and download if not.
-# destfile <- paste(mainDir,"forestfires.csv", sep="/")
 # if(!file.exists("forestfires.csv")){
-#     download.file(url="https://archive.ics.uci.edu/ml/machine-learning-databases/forest-fires/forestfires.csv",destfile)}
+#     download.file(url="https://archive.ics.uci.edu/ml/machine-learning-databases/forest-fires/forestfires.csv", "forestfires.csv" )}
 ## Read in the datafile
 forestdata <- read.csv("forestfires.csv", header = TRUE, sep = ",",stringsAsFactors=FALSE) %>%
-    mutate(full.month = month.name[match(month, tolower(month.abb))],
-           area = as.numeric(area),
-           temp=as.numeric(temp))
-# ## Description of the data can be found here: https://archive.ics.uci.edu/ml/datasets/Forest+Fires
-# saveRDS(forestdata, "forestdata.RDS")
-#forestdata <- readRDS("forestdata.RDS")
+   mutate(full.month = month.name[match(month, tolower(month.abb))],
+          area = as.numeric(area),
+          temp=as.numeric(temp))
+## Description of the data can be found here: https://archive.ics.uci.edu/ml/datasets/Forest+Fires
 
 # Define server logic required to draw a histogram
 shinyServer(function(input, output) {
@@ -36,7 +30,7 @@ shinyServer(function(input, output) {
     })
     
     output$predict = renderPlot({
-       ggplot(forestdata[which(forestdata$full.month == input$month), ], aes_string(x = input$variable, y = "area")) +
+        ggplot(forestdata[which(forestdata$full.month == input$month), ], aes_string(x = input$variable, y = "area")) +
             geom_point(na.rm = TRUE) +
             geom_smooth(na.rm = TRUE, 
                         method = "lm",
@@ -44,13 +38,13 @@ shinyServer(function(input, output) {
             theme_bw()
     })
     output$class <- renderText(
-       paste("Class of the selected variable is" , class(forestdata[, which(colnames(forestdata) == input$variable) ]))
+        paste("Class of the selected variable is" , class(forestdata[, which(colnames(forestdata) == input$variable) ]))
     )
     
     output$table <- renderTable({
         forestdata[which(forestdata$full.month == input$month), which(colnames(forestdata) != "full.month")]
     })
-
+    
 })
 
 
