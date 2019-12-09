@@ -7,22 +7,25 @@
 #    http://shiny.rstudio.com/
 #
 
-library(pacman)
-p_load(shiny, ggplot2)
+library(shiny)
+library(ggplot2)
+library(dplyr)
 
-## Create directory to where I saved the code
-mainDir <- paste("D:/Annette/Documents", "DDP", sep = "/")
-
-## Check if the data exists and download if not.
-destfile <- paste(mainDir,"forestfires.csv", sep="/")
-if(!file.exists(paste(mainDir, "forestfires.csv", sep = "/"))){
-    download.file(url="https://archive.ics.uci.edu/ml/machine-learning-databases/forest-fires/forestfires.csv",destfile)}
+# ## Create directory to where I saved the code
+# mainDir <- paste("D:/Annette/Documents", "DDP", sep = "/")
+# 
+# ## Check if the data exists and download if not.
+# destfile <- paste(mainDir,"forestfires.csv", sep="/")
+# if(!file.exists("forestfires.csv")){
+#     download.file(url="https://archive.ics.uci.edu/ml/machine-learning-databases/forest-fires/forestfires.csv",destfile)}
 ## Read in the datafile
-forestdata <- read.csv(destfile, header = TRUE, sep = ",",stringsAsFactors=FALSE) %>% 
+forestdata <- read.csv("forestfires.csv", header = TRUE, sep = ",",stringsAsFactors=FALSE) %>%
     mutate(full.month = month.name[match(month, tolower(month.abb))],
            area = as.numeric(area),
            temp=as.numeric(temp))
-## Description of the data can be found here: https://archive.ics.uci.edu/ml/datasets/Forest+Fires
+# ## Description of the data can be found here: https://archive.ics.uci.edu/ml/datasets/Forest+Fires
+# saveRDS(forestdata, "forestdata.RDS")
+#forestdata <- readRDS("forestdata.RDS")
 
 # Define server logic required to draw a histogram
 shinyServer(function(input, output) {
