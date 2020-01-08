@@ -12,8 +12,9 @@ This presentation adresses the second part of the course project.
 The app developed for the first part of the assignment is avalilable at:
 https://annettes.shinyapps.io/DevelopingDataProductsWk4/
 
-<a href="https://annettes.shinyapps.io/DevelopingDataProductsWk4/" :target="_blank">Hello, world!</a>
-
+<a href="https://annettes.shinyapps.io/DevelopingDataProductsWk4/" target="_blank">Hello, world!</a>
+                                                                                   
+<a href="https://annettes.shinyapps.io/DevelopingDataProductsWk4/" "target=\"_blank\"", ">full.Name, </a> 
 Source code for ui.R and server.R files are available on the GitHub:
 https://github.com/Moitjuh/DDP
 
